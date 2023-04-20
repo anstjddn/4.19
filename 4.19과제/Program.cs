@@ -135,25 +135,56 @@ namespace _4._19과제
 
         }
 
-        public LinkedListNode<T> Remove(T Value)
+        public bool  Remove(T Value)                                        // Remove값을 지우는건 bool이라 bool사용
         {
-            LinkedListNode<T> newnode = new LinkedListNode<T>(this, Value);
+            LinkedListNode<T> Findnode = Find(Value);                               // Find로 찾아서 Findnode로 설정
 
-
+            if (Findnode != null)                                   // Findnode 가 null이 아니면 Remove(node)를 사용 
+            {
+                Remove(Findnode);
+                return true;
+            }
+            else false;
             count--;
-            return newnode;
         }
        
-       /* public LinkedListNode<T> Find(T Value)
+        public LinkedListNode<T> Find(T Value)
         {
+            LinkedListNode<T> Findnode = head;
             EqualityComparer<T> comparer = EqualityComparer<T>.Default;                     // 비교하는클래스로 사용
-            if (Value != null)
+            
+            while(Findnode != null)                                         
             {
-                
+                if (comparer.Equals(Value, Findnode.Value))                                 //Findnode의 Value 와 내가 찾을려고하는 값을 비교하여 같으면 Findnode를 리턴하고
+                {
+                    return Findnode;
+                }
+                else Findnode.next;                                                     // 아니면 다음 노드랑 비교
             }
 
+            return null;                                                            // 없으면 null을 리턴
+        }
 
-        }*/
+    }
+    public void Remove(LinkedListNode<T> node)
+    {
+
+        // 지울려고하는 노드가 head나 tail의 경우
+        if (node == head) { node.next == head; }                    // 삭제하는거 이전이나 이후를 head또는 tail로 설정
+        if( node == tail) { node.prev == tail; }
+        
+
+        // 지울려고하는 노드가 중간에 껴있는경우
+        if(node.prev != null)                   //중간에 노드를 지울떄 지울려고하는 노드의 전의 next를 지울려고하는 노드의 next로 지정해서 지울려고 하는 node의 next랑 연결
+        {
+            node.prev.next = node.next;                     
+        }
+        if(node.next!= null)                //중간에 노드를 지울떄 지울려고하는 노드의 앞의 prev를 지울려고하는 노드의 prev로 지정해서 지울려고 하는 node의 prev랑 연결
+        {
+            node.next.prev = node.prev;
+        }
+
+        count--;
 
     }
 
@@ -166,8 +197,4 @@ namespace _4._19과제
         }
     }
 
-
-// Remove(T Value) 는 bool
-// Remove(node)는 void
-// Find 는 그냥 public
 
